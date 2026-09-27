@@ -1,0 +1,6 @@
+{
+  "name": "AttendPulse - Smart Class Attendance System",
+  "description": "Modern class attendance tracking with dynamic anti-proxy QR codes, geofencing, manual roll call, real-time analytics, and student alerts.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

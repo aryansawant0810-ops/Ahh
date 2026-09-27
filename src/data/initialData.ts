@@ -1,0 +1,417 @@
+import { ClassItem, Enrollment, NotificationLog, User, AttendanceRecord, ExcuseRequest } from '../types/attendance';
+
+export const INITIAL_USERS: User[] = [
+  // Teachers
+  {
+    id: 'teacher-1',
+    email: 'sarah.connor@university.edu',
+    name: 'Prof. Sarah Connor',
+    role: 'teacher',
+    department: 'Computer Science & Engineering',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 234-5678',
+  },
+  {
+    id: 'teacher-2',
+    email: 'alan.grant@university.edu',
+    name: 'Dr. Alan Grant',
+    role: 'teacher',
+    department: 'Natural Sciences & Biology',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 876-5432',
+  },
+  // Admin
+  {
+    id: 'admin-1',
+    email: 'admin.dean@university.edu',
+    name: 'Dean Arthur Mitchell',
+    role: 'admin',
+    department: 'Academic Affairs',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 999-0000',
+  },
+  // Students
+  {
+    id: 'student-1',
+    email: 'alex.rivera@student.edu',
+    name: 'Alex Rivera',
+    role: 'student',
+    studentIdNumber: 'STU-2026-101',
+    department: 'Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 301-8841',
+    parentEmail: 'parent.rivera@gmail.com',
+    parentPhone: '+1 (555) 902-1101',
+  },
+  {
+    id: 'student-2',
+    email: 'maya.patel@student.edu',
+    name: 'Maya Patel',
+    role: 'student',
+    studentIdNumber: 'STU-2026-102',
+    department: 'Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 302-8842',
+    parentEmail: 'parent.patel@gmail.com',
+    parentPhone: '+1 (555) 902-1102',
+  },
+  {
+    id: 'student-3',
+    email: 'jordan.lee@student.edu',
+    name: 'Jordan Lee',
+    role: 'student',
+    studentIdNumber: 'STU-2026-103',
+    department: 'Software Engineering',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 303-8843',
+    parentEmail: 'parent.lee@gmail.com',
+    parentPhone: '+1 (555) 902-1103',
+  },
+  {
+    id: 'student-4',
+    email: 'emily.watson@student.edu',
+    name: 'Emily Watson',
+    role: 'student',
+    studentIdNumber: 'STU-2026-104',
+    department: 'Data Science',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 304-8844',
+    parentEmail: 'parent.watson@gmail.com',
+    parentPhone: '+1 (555) 902-1104',
+  },
+  {
+    id: 'student-5',
+    email: 'lucas.silva@student.edu',
+    name: 'Lucas Silva',
+    role: 'student',
+    studentIdNumber: 'STU-2026-105',
+    department: 'Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 305-8845',
+    parentEmail: 'parent.silva@gmail.com',
+    parentPhone: '+1 (555) 902-1105',
+  },
+  {
+    id: 'student-6',
+    email: 'sophia.chen@student.edu',
+    name: 'Sophia Chen',
+    role: 'student',
+    studentIdNumber: 'STU-2026-106',
+    department: 'Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 306-8846',
+    parentEmail: 'parent.chen@gmail.com',
+    parentPhone: '+1 (555) 902-1106',
+  },
+  {
+    id: 'student-7',
+    email: 'marcus.johnson@student.edu',
+    name: 'Marcus Johnson',
+    role: 'student',
+    studentIdNumber: 'STU-2026-107',
+    department: 'Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 307-8847',
+    parentEmail: 'parent.johnson@gmail.com',
+    parentPhone: '+1 (555) 902-1107',
+  },
+  {
+    id: 'student-8',
+    email: 'chloe.bennett@student.edu',
+    name: 'Chloe Bennett',
+    role: 'student',
+    studentIdNumber: 'STU-2026-108',
+    department: 'Electrical Engineering',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 308-8848',
+    parentEmail: 'parent.bennett@gmail.com',
+    parentPhone: '+1 (555) 902-1108',
+  },
+  {
+    id: 'student-9',
+    email: 'liam.oconnor@student.edu',
+    name: 'Liam O’Connor',
+    role: 'student',
+    studentIdNumber: 'STU-2026-109',
+    department: 'Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 309-8849',
+    parentEmail: 'parent.oconnor@gmail.com',
+    parentPhone: '+1 (555) 902-1109',
+  },
+  {
+    id: 'student-10',
+    email: 'priya.sharma@student.edu',
+    name: 'Priya Sharma',
+    role: 'student',
+    studentIdNumber: 'STU-2026-110',
+    department: 'Data Science',
+    avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&auto=format&fit=crop&q=80',
+    phone: '+1 (555) 310-8850',
+    parentEmail: 'parent.sharma@gmail.com',
+    parentPhone: '+1 (555) 902-1110',
+  },
+];
+
+export const INITIAL_CLASSES: ClassItem[] = [
+  {
+    id: 'class-1',
+    name: 'Computer Science 101',
+    code: 'CS101',
+    teacherId: 'teacher-1',
+    teacherName: 'Prof. Sarah Connor',
+    schedule: 'Mon, Wed, Fri • 10:00 AM - 11:30 AM',
+    room: 'Hall B-302 (Science Wing)',
+    department: 'Computer Science',
+    semester: 'Fall 2026',
+    location: {
+      lat: 37.7749,
+      lng: -122.4194,
+      name: 'Campus Science Wing, Hall B-302'
+    },
+    geofenceRadiusMeters: 75,
+    color: '#3b82f6', // blue
+  },
+  {
+    id: 'class-2',
+    name: 'Data Structures & Algorithms',
+    code: 'CS240',
+    teacherId: 'teacher-1',
+    teacherName: 'Prof. Sarah Connor',
+    schedule: 'Tue, Thu • 01:00 PM - 02:30 PM',
+    room: 'Turing Lab 401 (Tech Center)',
+    department: 'Computer Science',
+    semester: 'Fall 2026',
+    location: {
+      lat: 37.7752,
+      lng: -122.4188,
+      name: 'Turing Lab 401'
+    },
+    geofenceRadiusMeters: 60,
+    color: '#8b5cf6', // purple
+  },
+  {
+    id: 'class-3',
+    name: 'Modern Full-Stack Web Development',
+    code: 'WEB305',
+    teacherId: 'teacher-1',
+    teacherName: 'Prof. Sarah Connor',
+    schedule: 'Mon, Wed • 03:00 PM - 04:30 PM',
+    room: 'Studio A-105',
+    department: 'Software Engineering',
+    semester: 'Fall 2026',
+    location: {
+      lat: 37.7745,
+      lng: -122.4201,
+      name: 'Studio A-105'
+    },
+    geofenceRadiusMeters: 80,
+    color: '#10b981', // emerald
+  },
+  {
+    id: 'class-4',
+    name: 'Applied Machine Learning',
+    code: 'AI420',
+    teacherId: 'teacher-2',
+    teacherName: 'Dr. Alan Grant',
+    schedule: 'Friday • 09:00 AM - 12:00 PM',
+    room: 'Neural Suite 210',
+    department: 'Artificial Intelligence',
+    semester: 'Fall 2026',
+    location: {
+      lat: 37.7760,
+      lng: -122.4175,
+      name: 'Neural Suite 210'
+    },
+    geofenceRadiusMeters: 100,
+    color: '#f59e0b', // amber
+  },
+];
+
+// Enroll all 10 students into CS101, and subsets into other classes
+export const INITIAL_ENROLLMENTS: Enrollment[] = [
+  ...INITIAL_USERS.filter(u => u.role === 'student').map((student, i) => ({
+    id: `enr-cs101-${i + 1}`,
+    studentId: student.id,
+    classId: 'class-1',
+    enrolledAt: '2026-09-01T08:00:00Z',
+  })),
+  ...INITIAL_USERS.filter(u => u.role === 'student').slice(0, 8).map((student, i) => ({
+    id: `enr-cs240-${i + 1}`,
+    studentId: student.id,
+    classId: 'class-2',
+    enrolledAt: '2026-09-01T08:00:00Z',
+  })),
+  ...INITIAL_USERS.filter(u => u.role === 'student').slice(0, 7).map((student, i) => ({
+    id: `enr-web305-${i + 1}`,
+    studentId: student.id,
+    classId: 'class-3',
+    enrolledAt: '2026-09-01T08:00:00Z',
+  })),
+  ...INITIAL_USERS.filter(u => u.role === 'student').slice(2, 9).map((student, i) => ({
+    id: `enr-ai420-${i + 1}`,
+    studentId: student.id,
+    classId: 'class-4',
+    enrolledAt: '2026-09-01T08:00:00Z',
+  })),
+];
+
+// Past sessions records for CS101 (last 8 dates leading up to today: 2026-09-26)
+const sampleDates = [
+  '2026-09-11',
+  '2026-09-14',
+  '2026-09-16',
+  '2026-09-18',
+  '2026-09-21',
+  '2026-09-23',
+  '2026-09-25',
+  '2026-09-26', // today
+];
+
+export const INITIAL_RECORDS: AttendanceRecord[] = [
+  // Session 1: 2026-09-11
+  { id: 'rec-1', classId: 'class-1', studentId: 'student-1', date: '2026-09-11', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-11T10:02:15Z', verifiedLocation: true, distanceMeters: 12 },
+  { id: 'rec-2', classId: 'class-1', studentId: 'student-2', date: '2026-09-11', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-11T10:03:00Z', verifiedLocation: true, distanceMeters: 18 },
+  { id: 'rec-3', classId: 'class-1', studentId: 'student-3', date: '2026-09-11', status: 'present', method: 'manual', timestamp: '2026-09-11T10:05:00Z' },
+  { id: 'rec-4', classId: 'class-1', studentId: 'student-4', date: '2026-09-11', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-11T10:04:12Z', verifiedLocation: true },
+  { id: 'rec-5', classId: 'class-1', studentId: 'student-5', date: '2026-09-11', status: 'late', method: 'manual', timestamp: '2026-09-11T10:22:00Z', note: 'Transit delay' },
+  { id: 'rec-6', classId: 'class-1', studentId: 'student-6', date: '2026-09-11', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-11T10:03:40Z' },
+  { id: 'rec-7', classId: 'class-1', studentId: 'student-7', date: '2026-09-11', status: 'absent', method: 'manual', timestamp: '2026-09-11T10:10:00Z', note: 'Unexcused' },
+  { id: 'rec-8', classId: 'class-1', studentId: 'student-8', date: '2026-09-11', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-11T10:02:50Z' },
+  { id: 'rec-9', classId: 'class-1', studentId: 'student-9', date: '2026-09-11', status: 'present', method: 'manual', timestamp: '2026-09-11T10:06:00Z' },
+  { id: 'rec-10', classId: 'class-1', studentId: 'student-10', date: '2026-09-11', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-11T10:01:50Z' },
+
+  // Session 2: 2026-09-14 (Monday - slightly higher absence trend)
+  { id: 'rec-11', classId: 'class-1', studentId: 'student-1', date: '2026-09-14', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-14T10:01:20Z', verifiedLocation: true },
+  { id: 'rec-12', classId: 'class-1', studentId: 'student-2', date: '2026-09-14', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-14T10:04:10Z' },
+  { id: 'rec-13', classId: 'class-1', studentId: 'student-3', date: '2026-09-14', status: 'late', method: 'manual', timestamp: '2026-09-14T10:18:00Z' },
+  { id: 'rec-14', classId: 'class-1', studentId: 'student-4', date: '2026-09-14', status: 'absent', method: 'manual', timestamp: '2026-09-14T10:15:00Z', note: 'Sick leave requested' },
+  { id: 'rec-15', classId: 'class-1', studentId: 'student-5', date: '2026-09-14', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-14T10:05:00Z' },
+  { id: 'rec-16', classId: 'class-1', studentId: 'student-6', date: '2026-09-14', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-14T10:03:00Z' },
+  { id: 'rec-17', classId: 'class-1', studentId: 'student-7', date: '2026-09-14', status: 'absent', method: 'manual', timestamp: '2026-09-14T10:15:00Z' },
+  { id: 'rec-18', classId: 'class-1', studentId: 'student-8', date: '2026-09-14', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-14T10:02:10Z' },
+  { id: 'rec-19', classId: 'class-1', studentId: 'student-9', date: '2026-09-14', status: 'excused', method: 'admin_override', timestamp: '2026-09-14T10:15:00Z', note: 'Intercollegiate debate' },
+  { id: 'rec-20', classId: 'class-1', studentId: 'student-10', date: '2026-09-14', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-14T10:02:00Z' },
+
+  // Session 3: 2026-09-16
+  { id: 'rec-21', classId: 'class-1', studentId: 'student-1', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:01:00Z' },
+  { id: 'rec-22', classId: 'class-1', studentId: 'student-2', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:02:00Z' },
+  { id: 'rec-23', classId: 'class-1', studentId: 'student-3', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:03:00Z' },
+  { id: 'rec-24', classId: 'class-1', studentId: 'student-4', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:02:30Z' },
+  { id: 'rec-25', classId: 'class-1', studentId: 'student-5', date: '2026-09-16', status: 'present', method: 'manual', timestamp: '2026-09-16T10:06:00Z' },
+  { id: 'rec-26', classId: 'class-1', studentId: 'student-6', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:04:00Z' },
+  { id: 'rec-27', classId: 'class-1', studentId: 'student-7', date: '2026-09-16', status: 'absent', method: 'manual', timestamp: '2026-09-16T10:15:00Z' },
+  { id: 'rec-28', classId: 'class-1', studentId: 'student-8', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:01:45Z' },
+  { id: 'rec-29', classId: 'class-1', studentId: 'student-9', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:02:15Z' },
+  { id: 'rec-30', classId: 'class-1', studentId: 'student-10', date: '2026-09-16', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-16T10:01:25Z' },
+
+  // Session 4: 2026-09-18
+  { id: 'rec-31', classId: 'class-1', studentId: 'student-1', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:02:00Z' },
+  { id: 'rec-32', classId: 'class-1', studentId: 'student-2', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:03:00Z' },
+  { id: 'rec-33', classId: 'class-1', studentId: 'student-3', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:03:00Z' },
+  { id: 'rec-34', classId: 'class-1', studentId: 'student-4', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:02:30Z' },
+  { id: 'rec-35', classId: 'class-1', studentId: 'student-5', date: '2026-09-18', status: 'late', method: 'manual', timestamp: '2026-09-18T10:20:00Z' },
+  { id: 'rec-36', classId: 'class-1', studentId: 'student-6', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:04:00Z' },
+  { id: 'rec-37', classId: 'class-1', studentId: 'student-7', date: '2026-09-18', status: 'absent', method: 'manual', timestamp: '2026-09-18T10:15:00Z' },
+  { id: 'rec-38', classId: 'class-1', studentId: 'student-8', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:01:10Z' },
+  { id: 'rec-39', classId: 'class-1', studentId: 'student-9', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:02:00Z' },
+  { id: 'rec-40', classId: 'class-1', studentId: 'student-10', date: '2026-09-18', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-18T10:01:00Z' },
+
+  // Session 5: 2026-09-21 (Monday)
+  { id: 'rec-41', classId: 'class-1', studentId: 'student-1', date: '2026-09-21', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-21T10:02:00Z' },
+  { id: 'rec-42', classId: 'class-1', studentId: 'student-2', date: '2026-09-21', status: 'late', method: 'manual', timestamp: '2026-09-21T10:15:00Z' },
+  { id: 'rec-43', classId: 'class-1', studentId: 'student-3', date: '2026-09-21', status: 'absent', method: 'manual', timestamp: '2026-09-21T10:10:00Z' },
+  { id: 'rec-44', classId: 'class-1', studentId: 'student-4', date: '2026-09-21', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-21T10:03:00Z' },
+  { id: 'rec-45', classId: 'class-1', studentId: 'student-5', date: '2026-09-21', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-21T10:04:00Z' },
+  { id: 'rec-46', classId: 'class-1', studentId: 'student-6', date: '2026-09-21', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-21T10:01:00Z' },
+  { id: 'rec-47', classId: 'class-1', studentId: 'student-7', date: '2026-09-21', status: 'absent', method: 'manual', timestamp: '2026-09-21T10:15:00Z' },
+  { id: 'rec-48', classId: 'class-1', studentId: 'student-8', date: '2026-09-21', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-21T10:02:00Z' },
+  { id: 'rec-49', classId: 'class-1', studentId: 'student-9', date: '2026-09-21', status: 'late', method: 'manual', timestamp: '2026-09-21T10:25:00Z' },
+  { id: 'rec-50', classId: 'class-1', studentId: 'student-10', date: '2026-09-21', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-21T10:01:00Z' },
+
+  // Session 6: 2026-09-23
+  { id: 'rec-51', classId: 'class-1', studentId: 'student-1', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:02:00Z' },
+  { id: 'rec-52', classId: 'class-1', studentId: 'student-2', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:03:00Z' },
+  { id: 'rec-53', classId: 'class-1', studentId: 'student-3', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:04:00Z' },
+  { id: 'rec-54', classId: 'class-1', studentId: 'student-4', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:01:00Z' },
+  { id: 'rec-55', classId: 'class-1', studentId: 'student-5', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:05:00Z' },
+  { id: 'rec-56', classId: 'class-1', studentId: 'student-6', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:02:00Z' },
+  { id: 'rec-57', classId: 'class-1', studentId: 'student-7', date: '2026-09-23', status: 'absent', method: 'manual', timestamp: '2026-09-23T10:15:00Z' },
+  { id: 'rec-58', classId: 'class-1', studentId: 'student-8', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:03:00Z' },
+  { id: 'rec-59', classId: 'class-1', studentId: 'student-9', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:02:00Z' },
+  { id: 'rec-60', classId: 'class-1', studentId: 'student-10', date: '2026-09-23', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-23T10:01:00Z' },
+
+  // Session 7: 2026-09-25
+  { id: 'rec-61', classId: 'class-1', studentId: 'student-1', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:01:10Z' },
+  { id: 'rec-62', classId: 'class-1', studentId: 'student-2', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:02:00Z' },
+  { id: 'rec-63', classId: 'class-1', studentId: 'student-3', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:04:00Z' },
+  { id: 'rec-64', classId: 'class-1', studentId: 'student-4', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:03:00Z' },
+  { id: 'rec-65', classId: 'class-1', studentId: 'student-5', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:05:00Z' },
+  { id: 'rec-66', classId: 'class-1', studentId: 'student-6', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:02:00Z' },
+  { id: 'rec-67', classId: 'class-1', studentId: 'student-7', date: '2026-09-25', status: 'absent', method: 'manual', timestamp: '2026-09-25T10:15:00Z' },
+  { id: 'rec-68', classId: 'class-1', studentId: 'student-8', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:01:00Z' },
+  { id: 'rec-69', classId: 'class-1', studentId: 'student-9', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:03:00Z' },
+  { id: 'rec-70', classId: 'class-1', studentId: 'student-10', date: '2026-09-25', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-25T10:02:00Z' },
+
+  // Today: 2026-09-26 (Some marked, some waiting for check-in)
+  { id: 'rec-71', classId: 'class-1', studentId: 'student-2', date: '2026-09-26', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-26T10:02:15Z', verifiedLocation: true },
+  { id: 'rec-72', classId: 'class-1', studentId: 'student-4', date: '2026-09-26', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-26T10:03:10Z', verifiedLocation: true },
+  { id: 'rec-73', classId: 'class-1', studentId: 'student-6', date: '2026-09-26', status: 'present', method: 'manual', timestamp: '2026-09-26T10:04:00Z' },
+  { id: 'rec-74', classId: 'class-1', studentId: 'student-8', date: '2026-09-26', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-26T10:01:50Z' },
+  { id: 'rec-75', classId: 'class-1', studentId: 'student-10', date: '2026-09-26', status: 'present', method: 'qr_dynamic', timestamp: '2026-09-26T10:02:40Z' },
+];
+
+export const INITIAL_EXCUSES: ExcuseRequest[] = [
+  {
+    id: 'exc-1',
+    studentId: 'student-7',
+    studentName: 'Marcus Johnson',
+    classId: 'class-1',
+    className: 'Computer Science 101',
+    date: '2026-09-21',
+    reason: 'Severe food poisoning and doctor consultation at University Health Clinic.',
+    status: 'pending',
+    submittedAt: '2026-09-21T14:30:00Z',
+  },
+  {
+    id: 'exc-2',
+    studentId: 'student-4',
+    studentName: 'Emily Watson',
+    classId: 'class-1',
+    className: 'Computer Science 101',
+    date: '2026-09-14',
+    reason: 'Attending regional hackathon in Palo Alto, representing university team.',
+    status: 'approved',
+    submittedAt: '2026-09-13T18:00:00Z',
+    responseNote: 'Approved. Please review lecture notes on recursion.',
+  }
+];
+
+export const INITIAL_NOTIFICATIONS: NotificationLog[] = [
+  {
+    id: 'notif-1',
+    type: 'sms',
+    recipient: '+1 (555) 902-1107',
+    recipientName: 'Johnson Family',
+    studentName: 'Marcus Johnson',
+    className: 'Computer Science 101',
+    date: '2026-09-23',
+    status: 'absent',
+    message: 'Attendance Alert: Marcus Johnson was recorded absent for Computer Science 101 on Sep 23, 2026. Cumulative attendance is 28.5%.',
+    sentAt: '2026-09-23T10:45:00Z',
+    channel: 'Parent',
+  },
+  {
+    id: 'notif-2',
+    type: 'email',
+    recipient: 'marcus.johnson@student.edu',
+    recipientName: 'Marcus Johnson',
+    studentName: 'Marcus Johnson',
+    className: 'Computer Science 101',
+    date: '2026-09-23',
+    status: 'absent',
+    message: 'Dear Marcus, you were marked absent today. You are currently below the required 75% attendance threshold for final exam eligibility.',
+    sentAt: '2026-09-23T10:45:00Z',
+    channel: 'Student',
+  }
+];
